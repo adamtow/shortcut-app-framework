@@ -235,12 +235,12 @@ The following diagram displays the flow of operations within the App Framework s
 
 ![App Framework Application Flowchart](https://raw.githubusercontent.com/adamtow/shortcut-app-framework/master/flowchart.png)
 
-Here is what’s happening during each iteration of the application loop:
+Here’s what’s happening during each iteration of the application loop:
 
-1. At the beginning of the repeat loop, the variable `Function Name` is evaluated in a series of IF statements.
-2. It looks within the appropriate [pseudo-class](#classes) via an IF/CONTAINS comparison and all class [pseudo-functions](#functions) via an IF/EQUALS comparison for a matching string. When found, it executes the code contained in the IF statement block.
-3. At the end of the function, the [`Return` object](#return) must be properly set up.
-4. Program executions goes to the end of the repeat loop, where the `Return` object is evaluated and global variables are reset.
+1. At the beginning of the loop, the variable `Function Name` is evaluated in a series of IF statements.
+2. It looks within the appropriate [pseudo-class](#classes) via an IF/CONTAINS comparison and all class [pseudo-functions](#functions) via an IF/EQUALS comparison for a matching string. When found, it executes the code contained in the IF statement block. If there’s no match, it goes to the next IF/CONTAINS block for a match.
+3. At the end of the matching function, the [`Return` object](#return) must be properly set up.
+4. Program execution goes to the end of the repeat loop, where the `Return` object is evaluated and global variables are reset.
 5. Program execution returns to the top of the loop, where the process repeats itself.
 
 ![Pseudo-Functions in App Framework](https://atow.files.wordpress.com/2019/01/Pseudo-Functions-in-App-Framework.png?w=1280)
@@ -597,7 +597,7 @@ If you plan on distributing your shortcuts to the public, I think it’s better 
 I feel this is more of a job for Apple to address. Allowing shortcuts to be bundle or container for multiple shortcuts would go a long way towards creating small re-usable shortcuts that can be used across multiple shortcut applications.
 
 ### Shortcuts are not as Powerful as what I can Create in Xcode. 
-Of course, and I am not saying shortcut applications are. At the same time, can you program in Xcode while lying prone in bed or strolling in the park? You can’t lug your laptop everywhere you go like you can carry your iPhone.
+Of course, and I am not saying shortcut applications are. At the same time, can you program in Xcode while lying prone in bed or strolling in the park? You can’t lug your laptop everywhere you go like you can carry your iPhone. Can you make an app in 30 seconds in Xcode to select a group of photos from the user’s Photos Library and resize them for uploading to a website?
 
 The visual programming style of Shortcuts, coupled with the touch UI of iOS enables on-to-go mobile programming. Rather than trying to shoehorn decades of desktop programming tools into a phone or tablet interface, why not try to create new development tools and interfaces optimized for mobile and touch? And, where appropriate, port the best tools from desktop programming to the mobile environment.
 
@@ -607,7 +607,6 @@ App Framework then let’s you create complex applications just in Shortcuts. I 
 
 <span id="license"></span>
 ## License
-MIT License
 Copyright © 2018 Adam Tow • tow.com • @atow
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
