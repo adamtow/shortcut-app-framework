@@ -3,19 +3,34 @@ By Adam Tow • [tow.com](tow.com) • [@atow](https://twitter.com/atow/)
 
 [App Framework](https://tow.com/shortcuts/framework/) is a starting point for shortcut developers to create complex applications in Shortcuts. Study and learn from this documentation and the shortcut, which is heavily commented, and you’ll be writing your own shortcut applications in no time!
 
-## Download App Framework
-The latest version of App Framework is available from RoutineHub.co:
+## Table of Contents
+- [Why Shortcut Applications?](#why)
+- [Download App Framework](#download)
+- [Application Settings](#settings)
+- [Preferences](#preferences)
+- [Localization](#localization)
+- [Assets](#assets)
+- [Application Loop](#loop)
+- [vCard Menus](#menus)
+- [Pseudo-Global Variables](#global-vars)
+- [Pseudo-Local Variables](#local-vars)
+- [Pseudo-Classes](#classes)
+- [Pseudo-Functions](#functions)
+- [Special Comments](#comments)
+- [Miscellaneous Tips and Tricks](#misc)
+- [Frequently Asked Questions](#faq)
+- [License](#license)
 
-- [Download App Framework Shortcut from RoutineHub.co](https://routinehub.co/shortcut/1510)
+***
 
-Localization files and documentation for App Framework are also available on GitHub:
+<span id="why"></span>
+## Why Shortcut Applications?
+Shortcuts are capable of doing far more than simple actions to calculate driving time to a location, setting reminders, or converting files from one format to another. The problem to date is that there has not been an easy way to create complex application-like shortcuts. 
 
-- [Visit App Framework on GitHub](https://github.com/adamtow/shortcut-app-framework)
+Shortcuts do not feature traditional programming concepts like functions, while loops, and local variables. Most shortcuts run from the top of the list of actions to the bottom of the list. As a result, many seasoned developers may scoff at Shortcuts as a toy or gimmick. 
 
-You’re welcome to send me a pull request for new localizations and corrections to the documentation.
-
-## Features
-App Framework provides scaffolding for implementing the following application features in your shortcuts:
+### Features
+App Framework addresses these issues with design and programming methodologies for creating shortcuts. With App Framework, you have a starter shortcut that implements the following application features:
 
 - [Application Settings](#settings)
 - [Preferences](#preferences)
@@ -27,8 +42,25 @@ App Framework provides scaffolding for implementing the following application fe
 - [Pseudo-Local Variables](#local-vars)
 - [Pseudo-Classes](#classes)
 - [Pseudo-Functions](#functions)
+- [Special Comments](#comments)
 
-<hr />
+With App Framework, you will be able to create complex applications in Shortcuts using a fully touch-oriented and visual programming interface. 
+
+***
+
+<span id="download"></span>
+## Download App Framework
+The latest version of App Framework is available from RoutineHub.co:
+
+- [Download App Framework Shortcut from RoutineHub.co](https://routinehub.co/shortcut/1510)
+
+Localization files and documentation for App Framework are also available on GitHub:
+
+- [Visit App Framework on GitHub](https://github.com/adamtow/shortcut-app-framework)
+
+You’re welcome to send me a pull request for new localizations and corrections to the documentation.
+
+***
 
 <span id="settings"></span>
 ## Application Settings
@@ -47,7 +79,7 @@ Application settings and defaults are stored in a dictionary called `App`. Here 
 
 The `App` variable is an example of a [pseudo-global variable](#global-vars) and is available throughout your entire application lifecycle.
 
-<hr />
+***
 
 <span id="preferences"></span>
 ## Preferences
@@ -55,33 +87,37 @@ Preferences are stored as a JSON file in the Shortcuts directory of iCloud Drive
 
 `iCloud Drive/Shortcuts/App Framework/config.json`
 
-Default Preferences, found in the `App` global, are loaded the first time the shortcut is launched by the user. In this framework, we have six preferences:
+Default Preferences, found in the `App` global, are loaded the first time the shortcut is launched by the user. In this shortcut, we have six preferences:
 
 1. **Copy Locally**: When copying text, copy to the local clipboard or the user’s global iCloud clipboard (for Handoff).
-2. **Debug**: Displays alerts when moving through the application. Useful for understanding what [pseudo-function](#functions) is being called at the time.
-3. **Language**: The language that will be used to generate the Localized Strings global variable.
+2. **Debug**: Displays alerts when moving through the application. Useful for understanding what [pseudo-function](#functions) is being called at the exact moment.
+3. **Language**: The language that will be used to generate the `Localized Strings` global variable.
 4. **Number**: A number that the user can modify.
 5. **Text**: A string that the user can modify.
 6. **Version**: This corresponds to the build number of the application. It’s updated whenever a new version of the shortcut is added and run by the user.
 
-Preferences are available throughout your program’s execution via the `Preferences` variable.
+Preferences are available throughout your program’s execution via the `Preferences` global variable.
 
 ![Preferences in Code and During Program Execution](https://atow.files.wordpress.com/2019/01/Preferences-in-Code-and-While-Running-Application.png?w=1280)
 
-As you build your own application, you’ll add and remove items to the Default Preferences variable in the App global. You’ll add them to your preferences menu in the [pseudo-function "Application.settings"](#application-settings).
+As you build your own application, you’ll add and remove items to the `Default Preferences` variable in the `App` global. You’ll add them to your preferences menu in the [pseudo-function `Application.settings`](#application-settings).
 
->When you make changes to the `Preferences` variable, remember to call **Set Variable** on `Preferences`. Otherwise, your changes won’t be saved back to the `Preferences` object. Also call the **Save File** action on `Preferences` to save your changes back to disk.
+>When you make changes to the `Preferences` variable, remember to call **Set Variable** on `Preferences`. Otherwise, your changes will not be saved back to the `Preferences`. Also call the **Save File** action immediately after to save your changes back to disk.
 
 ![Calling Set Variable and Save File actions when saving preferences.](https://atow.files.wordpress.com/2019/01/Calling-Set-Variable-and-Save-File-actions-when-saving-preferences..png?w=1280)
 
 ### Show Debugging Information
 The preference `Debug` turns on additional debugging alerts when running the App Framework shortcut. It will stop execution at key moments during program execution, including the beginning and end of the Application Loop. You’ll be able to view the function that will be called next, the state of the `Current Number` and `Current Text` global variables, and more.
 
-Use IF Debug Equals True blocks when developing your application so you can inspect what’s happening during challenging portions of your code. Also consider using my shortcut [Inspector](https://tow.com/shortcuts/inspector/), which lets you **view and modify** objects such as Dictionaries, Lists, Text, Numbers, and Booleans at runtime.
+Use IF/EQUALS Debug True blocks when developing your application so you can inspect what is happening during complex portions of your code. You can also place a [specialty formatted comment](#comments) immediately below the IF block to you intend to remove this code prior to releasing your shortcut to the public.
+
+![Remove Debug Code Prior to Releasing Your Shortcut](https://atow.files.wordpress.com/2019/01/Remove-Debug-code-prior-to-ship.png?w=1280)
+
+Also consider using my shortcut [Inspector](https://tow.com/shortcuts/inspector/), which lets you **view and modify** objects such as Dictionaries, Lists, Text, Numbers, and Booleans at runtime.
 
 ![Inspector: View and Modify Objects at Runtime While Developing Your Shortcuts](https://atow.files.wordpress.com/2019/01/35d3c4e8-bff9-45c6-b5ef-8e699146b078.png?w=1280)
 
-<hr />
+***
 
 <span id="localization"></span>
 ## Localization
@@ -107,7 +143,7 @@ App Framework is ready to be translated into your preferred language. It comes w
 
 ![Localized Strings](https://atow.files.wordpress.com/2019/01/Image.png?w=1280)
 
-<hr />
+***
 
 <span id="assets"></span>
 ## Assets
@@ -115,7 +151,7 @@ Image assets for menus are stored as Base64 strings within the `Assets` global v
 
 ![Assets Dictionary in App Framework](https://atow.files.wordpress.com/2019/01/Assets-Dictionary-in-App-Framework-1.png?w=1280)
 
-<hr />
+***
 
 <span id="menus"></span>
 ## vCard Menus
@@ -164,7 +200,7 @@ To create a vCard menu, follow these steps:
 
 ![vCard Menu Creation](https://atow.files.wordpress.com/2019/01/IMG_2109.png?w=1280)
 
-<hr />
+***
 
 <span id="loop"></span>
 ## Application Loop
@@ -219,7 +255,7 @@ Within this version of App Framework, the primary values that the developer must
 
 ![Repeat Loop Beginning and End](https://atow.files.wordpress.com/2019/01/Repeat-Loop-Beginning-and-End.png?w=1280)
 
-<hr />
+***
 
 <span id="global-vars"></span>
 ## Pseudo-Global Variables
@@ -246,7 +282,7 @@ Here are some examples of global variables used in App Framework:
 
 ![Pseudo-Global Variables](https://atow.files.wordpress.com/2019/01/Pseudo-Global-Variables.png?w=1280)
 
-<hr />
+***
 
 <span id="local-vars"></span>
 ## Pseudo-Local Variables
@@ -271,7 +307,7 @@ As you can see in the screenshot below, it’s now easy to distinguish which var
 
 ![Pseudo-Global and Pseudo-Local Variables in App Framework](https://atow.files.wordpress.com/2019/01/Global-Variables-and-Local-Variables-in-App-Framework.png?w=1280)
 
-<hr />
+***
 
 <span id="classes-vars"></span>
 ## Pseudo-Classes
@@ -310,7 +346,7 @@ When you see this comment, you know we are defining a new pseudo-class. Be sure 
 
 We also separate pseudo-classes with columned comments. Choose an emoji that best represents what your class does when creating the column comments.
 
-<hr />
+***
  
 <span id="functions"></span>
 ## Pseudo-Functions
@@ -352,9 +388,111 @@ App Framework has the following functions defined:
 - **Application.welcome**: This function is called when the App Framework shortcut is run with no input.
 - **Application.settings**: This function is called when the Settings menu item is chosen from `Program.step2` or `Application.welcome`. It handles updating the `Copy Locally`, `Debug`, and `Language` preferences. It also has a stub for checking for updates to the shortcut. Right now, it informs the user of the current version and build and redirects them to the RoutineHub.co page for App Framework. Your shortcut might call UpdateKit or another shortcut updater library.
 
-<hr />
+***
 
-## Other Tips and Tricks
+<span id="comments"></span>
+## Special Comments
+Throughout this document, there have been mention of using specially formatted comments to distinguish different sections of your code. Here is a list of special comments that are used in App Framework and other apps:
+
+### Class
+This denotes the start of a pseudo-class.
+
+```
+◻️🔵🔵◻️🔵◻️◻️
+🔵◻️◻️◻️🔵◻️◻️
+🔵◻️◻️◻️🔵◻️◻️
+🔵◻️◻️◻️🔵◻️◻️
+◻️🔵🔵◻️🔵🔵🔵
+```
+
+This framework also separates classes with three sets of columned comments for each class. When scrolling through long sections of actions, this makes finding your code easier. 
+
+```
+🔍🔍🔍	🔍🔍🔍	🔍🔍🔍
+🔍🔍🔍	🔍🔍🔍	🔍🔍🔍
+🔍🔍🔍	🔍🔍🔍	🔍🔍🔍
+🔍🔍🔍	🔍🔍🔍	🔍🔍🔍
+🔍🔍🔍	🔍🔍🔍	🔍🔍🔍
+
+🔍🔍🔍	🔍🔍🔍
+🔍🔍🔍	🔍🔍🔍
+🔍🔍🔍	🔍🔍🔍
+🔍🔍🔍	🔍🔍🔍
+🔍🔍🔍	🔍🔍🔍
+
+🔍🔍🔍
+🔍🔍🔍
+🔍🔍🔍
+🔍🔍🔍
+🔍🔍🔍
+
+⚙️⚙️⚙️
+⚙️⚙️⚙️
+⚙️⚙️⚙️
+⚙️⚙️⚙️
+⚙️⚙️⚙️
+
+⚙️⚙️⚙️	⚙️⚙️⚙️
+⚙️⚙️⚙️	⚙️⚙️⚙️
+⚙️⚙️⚙️	⚙️⚙️⚙️
+⚙️⚙️⚙️	⚙️⚙️⚙️
+⚙️⚙️⚙️	⚙️⚙️⚙️
+
+⚙️⚙️⚙️	⚙️⚙️⚙️	⚙️⚙️⚙️
+⚙️⚙️⚙️	⚙️⚙️⚙️	⚙️⚙️⚙️
+⚙️⚙️⚙️	⚙️⚙️⚙️	⚙️⚙️⚙️
+⚙️⚙️⚙️	⚙️⚙️⚙️	⚙️⚙️⚙️
+⚙️⚙️⚙️	⚙️⚙️⚙️	⚙️⚙️⚙️
+```
+
+### Debug
+This denotes code that should be removed prior to release of the shortcut.
+
+```
+‼️‼️‼️	‼️‼️‼️	‼️‼️‼️
+‼️‼️‼️	‼️‼️‼️	‼️‼️‼️
+‼️‼️‼️	‼️‼️‼️	‼️‼️‼️
+‼️‼️‼️	‼️‼️‼️	‼️‼️‼️
+‼️‼️‼️	‼️‼️‼️	‼️‼️‼️
+```
+
+### External
+Not used in App Framework, this comment denotes a call to another shortcut. It’s also used when calling your shortcut recursively. 
+
+```
+◻️◻️◻️◻️🔵◻️◻️
+◻️◻️◻️◻️🔵🔵◻️
+🔵🔵🔵🔵🔵🔵🔵
+◻️◻️◻️◻️🔵🔵◻️
+◻️◻️◻️◻️🔵◻️◻️
+```
+
+### Function
+This denotes the start of a pseudo-function. 
+
+```
+⬛️⬛️⬛️◻️⬛️◻️◻️⬛️
+⬛️◻️◻️◻️⬛️⬛️◻️⬛️
+⬛️⬛️⬛️◻️⬛️◻️⬛️⬛️
+⬛️◻️◻️◻️⬛️◻️◻️⬛️
+⬛️◻️◻️◻️⬛️◻️◻️⬛️
+```
+
+### Repeat
+This marks the beginning and end of a complex, multi-action repeat loop (like the Application Loop). 
+
+```
+✳️✳️✳️✳️◻️✳️✳️✳️
+✳️◻️◻️✳️◻️✳️◻️✳️
+✳️✳️✳️✳️◻️✳️✳️✳️
+✳️◻️✳️◻️◻️✳️◻️◻️
+✳️◻️◻️✳️◻️✳️◻️◻️
+```
+
+***
+
+<span id="misc"></span>
+## Miscellaneous Tips and Tricks
 Here are some other tips and tricks that you’ll find useful when developing shortcut applications.
 
 ### Save File
@@ -394,12 +532,12 @@ For instance:
 
 Change the color of the shortcut icon so you don’t get confused with the current version you’re working on.
 
-### Use GitHub for Localization and Documentation
-Sign up for a GitHub account. Now that [free accounts can now create unlimited private repositories](https://blog.github.com/2019-01-07-new-year-new-github/), there’s no excuse to version track your code.
+### Version Track Your Shortcut
+[App Framework is on GitHub](https://github.com/adamtow/shortcut-app-framework) and you’re welcome to send me a pull request for new localizations and corrections to this documentation.
 
 >It’s a little more difficult to get the actual shortcut into git, but there are some [intriguing developments](https://routinehub.co/shortcut/1486) to watch for in the future.
 
-[App Framework is on GitHub](https://github.com/adamtow/shortcut-app-framework) and you’re welcome to send me a pull request for new localizations and corrections to the documentation.
+Sign up for a GitHub account. Now that [free accounts can create unlimited private repositories](https://blog.github.com/2019-01-07-new-year-new-github/), there’s no excuse to version track your code.
 
 ### Turn on iCloud Sync
 Sometimes Shortcuts crashes and displays a corrupted database error. This is alert looks very scary, and it’s not always obvious what button to press:
@@ -416,13 +554,46 @@ Sometimes Shortcuts crashes and displays a corrupted database error. This is ale
 >
 >- Exit
 
-Your mileage may vary, but I have found success in tapping Reset Shortcuts. This sometimes makes the Shortcuts app unusable (it launches and immediately crashes). When this happens, I perform turn the phone off and on again (Volume Up, Volume Down, hold Sleep/Wake button). When iOS reboots, and I open back up to the Shortcuts app, it’s completely empty. After about a minute, all of my shortcuts return, although the order of the shortcuts is completely hosed (so much for the **Sync Shortcut Order** preference in Settings)
+Your mileage may vary, but I have found success in tapping Reset Shortcuts. This sometimes makes the Shortcuts app unusable (it launches and immediately crashes). When this happens, I turn the iOS device off and on with these steps:
 
-![Empty Shortcuts Application after database corruption crash](https://atow.files.wordpress.com/2019/01/Empty-Shortcuts-Application-after-database-corruption-crash.png?w=1280)
+1. Press the Volume Up button.
+2. Press the Volume Down button.
+3. Press and hold the Sleep/Wake button.
+4. Slide to power off.
+5. Wait a few moments after the screen goes completely black.
+6. Press and hold the Sleep/Wake button until the Apple logo appears
 
-<hr />
+After iOS has rebooted, I open back up to the Shortcuts app, which may be completely empty.
+ 
+Do not panic.
 
-# License
+I repeat. **Do not panic.** 
+ 
+After a minute, all of my shortcuts return, although the order of the shortcuts is completely hosed (so much for the **Sync Shortcut Order** preference in iOS Settings).
+
+![Empty Shortcuts App After Database Corruption Crash](https://atow.files.wordpress.com/2019/01/Empty-Shortcuts-Application-after-database-corruption-crash.png?w=1280)
+
+It may be time to panic if your shortcuts never return (make sure you are first connected to the internet because iCloud sync cannot work while offline). In this event, you will have to restore from a backup that you made earlier to iCloud Drive. 
+
+***
+
+<span id="faq"></span>
+## Frequently Asked Questions
+
+### Why put all this code into one shortcut? It’s too complex and takes too long to scroll through all of the code. Why not compartmentalize the functionality into smaller sets of shortcuts? 
+If you plan on distributing your shortcuts to the public, I think it’s better to place all of your code into one shortcut rather than having the user to download X number of dependency shortcuts. 
+
+I feel this is more of a job for Apple to address. Allowing shortcuts to be bundle or container for multiple shortcuts would go a long way towards creating small re-usable shortcuts that can be used across multiple shortcut applications. 
+
+### Shortcuts are not as powerful as Swift and Xcode. 
+Of course, and I am not saying shortcut applications are. At the same time, can you program in Xcode while in bed or taking a walk around the park? You can’t lug your MacBook Pro like you can carry your iPhone everywhere you go. 
+
+The visual programming style of Shortcuts, coupled with the touch UI of iOS allows you to program on the go. App Framework then let’s you create complex applications just in Shortcuts. I wrote upwards of 30-40% of LaunchCuts, Cronios, and Inspector while out and about
+
+***
+
+<span id="license"></span>
+## License
 MIT License
 Copyright © 2018 Adam Tow • tow.com • @atow
 
