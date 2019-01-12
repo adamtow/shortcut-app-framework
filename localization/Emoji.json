@@ -8,7 +8,7 @@
 	    "alert.update": "This shortcut will now close and open Safari to the shortcut's page on RoutineHub.co. Compare the version number below with that on RoutineHub and update if necessary.",
 	    "alert.update.title": "Check for App Framework Updates",
 	    "alert.unknownMethod": "Could not ❓ the {{func}} message.",
-	    "alert.welcome": "App Framework is a starting point for creating shortcut applications with:\n\nPreferences, localization, application Loop, vCard menus, global variables, local variables, classes, functions, and more\n\nhttps://tow.com/shortcuts/framework/\n\nBy Adam Tow • tow.com • @atow",
+	    "alert.welcome": "App Framework is a starting point for creating shortcut applications with:\n\nPreferences, localization, application loop, vCard menus, global variables, local variables, classes, functions, and more\n\nhttps://tow.com/shortcuts/framework/\n\nBy Adam Tow • tow.com • @atow",
 	
        "debug.arguments": "Arguments:",
        "debug.function": "Function Name:",
