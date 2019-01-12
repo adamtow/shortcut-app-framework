@@ -29,7 +29,7 @@ Shortcuts are capable of doing far more than simple actions to calculate driving
 
 Shortcuts do not feature traditional programming concepts like functions, while loops, and local variables. And, most shortcuts are designed to run from the top of its list of actions to the bottom. As a result, many seasoned developers have scoffed at Shortcuts as a toy or gimmick.
 
->I’ll be the first to tell you, Shortcuts is no gimmick, and it can create [application experiences that actually go beyond](http://cronios.com) what’s possible with apps developed with Xcode.
+>I’ll be the first to tell you, shortcuts are no gimmick, and you can actually create [application experiences that actually go beyond](http://cronios.com) what’s currently possible with apps developed with Xcode.
 
 ### Features
 App Framework addresses these issues with design and programming methodologies for creating shortcuts. With App Framework, you have a starter shortcut that implements the following application features:
