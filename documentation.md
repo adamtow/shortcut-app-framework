@@ -25,7 +25,7 @@ By Adam Tow • [tow.com](tow.com) • [@atow](https://twitter.com/atow/)
 
 <span id="why"></span>
 ## Why Shortcut Applications?
-Shortcuts are capable of doing far more than simple actions to calculate driving directions, setting reminders, or converting files from one format to another. Complicated shortcuts are possible, but there hasn’t been an easy way to create them short of creating your own framework.
+Shortcuts are capable of doing far more than simple actions to calculate driving directions, setting reminders, or converting files from one format to another. Complicated shortcuts are possible, but there hasn’t been an easy way to create them short of building your own framework.
 
 Shortcuts do not feature traditional programming concepts like functions, while loops, and local variables. And, most shortcuts are designed to run from the top of its list of actions to the bottom. As a result, many seasoned developers have scoffed at Shortcuts as a toy or gimmick.
 
@@ -112,7 +112,7 @@ The preference `Debug` turns on additional debugging alerts when running the App
 
 ![Debug Preference and Alerts](https://atow.files.wordpress.com/2019/01/Debug-Preference-and-Debug-Alerts.png?w=1280)
 
-Use IF/EQUALS Debug True blocks when developing your application so you can inspect what is happening during complex portions of your code. You can also place a [specialty formatted comment](#comments) immediately below the IF block to you intend to remove this code prior to releasing your shortcut to the public.
+Use IF/EQUALS Debug True blocks when developing your application so you can inspect what is happening during complex portions of your code. You can also place a [specialty formatted comment](#comments) immediately below the IF block if you intend to remove this code prior to releasing your shortcut to the public.
 
 ![Remove Debug Code Prior to Releasing Your Shortcut](https://atow.files.wordpress.com/2019/01/Remove-Debug-code-prior-to-ship.png?w=1280)
 
@@ -257,7 +257,7 @@ The `Return` object contains information about the next function, global variabl
 
 Within this version of App Framework, the primary values that the developer must specify in the `Return` object are:
 
-- **handled**: a boolean value. Set true if the function successfully ran. False otherwise. App Framework returns to the Program.start function if an error occurred.
+- **handled**: a boolean value. Set true if the function successfully ran. False otherwise. App Framework returns to the `Program.start` function if an error occurred.
 - **next**: a string that is the next function to call. `Function Name` will be assigned the value of `next` at the end of the repeat loop.
 - **args**: a dictionary or singular element that will be assigned to the `Arguments` global variable. This can then be used by the next function.
 - **selection**: an array of elements. Selection is actually not used by App Framework, but it’s here to show how you can hold a list of items that the next function needs to operate on (i.e. a list of images, numbers, or strings).
@@ -295,7 +295,7 @@ Here are some examples of global variables used in App Framework:
 
 <span id="local-vars"></span>
 ## Pseudo-Local Variables
-Local variables are variables that are used solely within a specific [pseudo-function](#functions). For instance, in the `Program.step2` function, we create a vCard menu. We don’t use this menu variable anywhere else, so it makes sense to to distinguish it from variables in other functions.
+Local variables are variables that are used solely within a specific [pseudo-function](#functions). For instance, in the `Program.step2` function, we create a vCard menu. We don’t use this menu variable anywhere else, so it makes sense to distinguish it from variables in other functions.
 
 ![Pseudo-Local Variables in App Framework](https://atow.files.wordpress.com/2019/01/Pseudo-Local-Variables-in-App-Framework.png?w=1280)
 
@@ -607,7 +607,7 @@ When you see any of the above, consider closing your shortcuts, waiting a minute
 Shortcut applications can get quite long, and it’s a pain to scroll through hundreds or thousands of lines of code at a time.
 
 #### Jumping to the Top
-One tip is to put the most important code at the top of bottom of your shortcut. You can jump to the top of the shortcut by tapping on your device’s status bar.
+One tip is to put the most important code at the top or bottom of your shortcut. You can jump to the top of the shortcut by tapping on your device’s status bar.
 
 >I hope future versions of Shortcuts improves navigation in complicated shortcuts. It would be great to jump more quickly between sections of code through search or via something akin to [Kodex’s minimap](https://kodex.app/#features-href).
 
@@ -644,18 +644,18 @@ Sign up for a GitHub account. Now that [free accounts can create unlimited priva
 ## Frequently Asked Questions
 
 ### Why put all this code into one shortcut? It’s too complex and takes too long to scroll through all of the code. Why not compartmentalize the functionality into smaller sets of shortcuts? 
-If you plan on distributing your shortcuts to the public, I think it’s better to place all of your code into one shortcut rather than having the user to download (and maintain) several dependency shortcuts. 
+If you plan on distributing your shortcuts to the public, I think it’s better to place all of your code into one shortcut rather than having the user download (and maintain) several dependency shortcuts. 
 
-My hope is that the Shortcuts team at Apple addresses this in the future. Allowing shortcuts to be bundle or container for multiple shortcuts would go a long way towards creating small re-usable shortcuts that can be used across multiple shortcut applications.
+My hope is that the Shortcuts team at Apple addresses this in the future. Allowing shortcuts to be a bundle or container for multiple shortcuts would go a long way towards creating small re-usable shortcuts that can be used across multiple shortcut applications.
 
-### Shortcuts are not as Powerful as what I can Create in Xcode. 
+### Shortcuts are not as powerful as what I can create in Xcode. 
 Of course, and I am not saying shortcut applications are. At the same time, can you efficiently and effectively program in Xcode while laying in bed or strolling in the park? You can’t lug your laptop everywhere you go like you can carry your iPhone. Can you make an app in 30 seconds in Xcode to select a group of photos from the user’s Photos Library and resize them for uploading to a website?
 
 >App Framework provides tools and design methodologies for creating complex applications just in Shortcuts. I wrote upwards of 30% of LaunchCuts, Cronios, and Inspector when away from my desk.
 
-The visual programming style of Shortcuts, coupled with the touch UI of iOS enables on-to-go mobile programming. Rather than trying to shoehorn decades of desktop programming tools into a phone or tablet interface, why not try to create new development tools and interfaces optimized for mobile and touch? And, where appropriate, port the best tools from desktop programming to the mobile environment.
+The visual programming style of Shortcuts, coupled with the touch UI of iOS enables on-the-go mobile programming. Rather than trying to shoehorn decades of desktop programming tools into a phone or tablet interface, why not try to create new development tools and interfaces optimized for mobile and touch? And, where appropriate, port the best tools from desktop programming to the mobile environment.
 
->I’d rather have a beef-up version of Shortcuts than a port of Xcode to iOS.
+>I’d rather have a beefed-up version of Shortcuts than a port of Xcode to iOS.
 
 ***
 
