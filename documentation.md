@@ -75,6 +75,7 @@ Application settings and defaults are stored in a dictionary called `App`. Here 
 - `Build Number`
 - `Default Preferences`
 - `Default Language`
+- `Device-Specific Preferences`
 
 ![App-Dictionary-in-App-Framework](https://atow.files.wordpress.com/2019/01/App-Dictionary-in-App-Framework.png?w=1280)
 
@@ -106,6 +107,15 @@ As you build your own application, you’ll add and remove items to the `Default
 >When you make changes to the `Preferences` variable, remember to call **Set Variable** on `Preferences`. Otherwise, your changes will not be saved back to the `Preferences`. Follow this up with the **Save File** action to save your changes back to iCloud Drive.
 
 ![Calling Set Variable and Save File actions when saving preferences.](https://atow.files.wordpress.com/2019/01/Calling-Set-Variable-and-Save-File-actions-when-saving-preferences..png?w=1280)
+
+### Device-Specific Preferences
+You may want to have separate preferences for your shortcut when it is run on the user’s iPad or iPhone. If desired, set the value of the `App.Device-Specific Preferences` boolean to `true`.
+
+This will use the Device Name of the iOS device as the unique name for the preferences file.
+
+![Device-Specific Preferences](https://atow.files.wordpress.com/2019/01/Device-Specific-Preferences.png?w=1280)
+
+>Note: If the user has multiple iOS devices with the same name, those devices will share the same preferences file.
 
 ### Show Debugging Information
 The preference `Debug` turns on additional debugging alerts when running the App Framework shortcut. It will stop execution at key moments during program execution, including the beginning and end of the Application Loop. You’ll be able to view the function that will be called next, the state of the `Current Number` and `Current Text` global variables, and more.
@@ -527,11 +537,13 @@ Make sure you have iCloud Sync turned on for your Shortcuts in Settings.
 #### Corrupt Database Error
 During the course of developing a complicated shortcut, Shortcuts may crash and display the following alert to you. This is alert looks very scary, and it’s not always obvious which button to press:
 
-```
-Corrupt database
-The shortcuts database cannot be read because it is corrupt.
+![Shortcuts Corrupt Database Error](https://atow.files.wordpress.com/2019/01/Corrupt-Database-Error.png?w=1280)
 
-You can email support with your corrupted database or reset your custom shortcuts. Your Shortcuts will be lost, but if you use iCloud Sync they will be restored.
+```
+Corrupt Database
+The Shortcuts database cannot be read because it is corrupt.
+
+You can email support with your corrupted database or reset your custom shortcuts. Your shortcuts will be lost, but if you use iCloud Sync they will be restored.
 
 - Email Support
 - Reset Shortcuts
@@ -551,7 +563,7 @@ After the device has rebooted, I open back up to the Shortcuts app, which may be
  
 Do not panic.
 
-![Empty Shortcuts App After Database Corruption Crash](https://atow.files.wordpress.com/2019/01/Empty-Shortcuts-Application-after-database-corruption-crash.png?w=1280)
+![Don’t Panic Just Yet](https://atow.files.wordpress.com/2019/01/Empty-Shortcuts-Application-after-database-corruption-crash.png?w=1280)
 
 I repeat. **Do not panic.** 
  
