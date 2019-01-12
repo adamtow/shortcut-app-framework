@@ -555,6 +555,38 @@ After a minute, all of my shortcuts return, although the order of the shortcuts 
 
 It may be time to panic if your shortcuts never return (make sure you are first connected to the internet because iCloud sync cannot work while offline). In this event, you will have to restore from a backup that you made earlier to iCloud Drive. 
 
+### JavaScript
+You can run JavaScript in your shortcuts using the following steps:
+
+1. Add a **Text** action containing your script. Consider using an app like the excellent [Scriptable](https://scriptable.app) to debug your script prior to pasting it into Shortcuts.
+```
+const dict = { “name”: “John Doe”, “address”: “123 Main Street” };
+document.write( JSON.stringify( dict ) );
+```
+2. Add a **Text** action that references your script in (1).
+```
+<!DOCTYPE html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-16">
+</head>
+<script>
+{{Script Variable from Step 1}}
+</script>
+</head>
+<body>
+</body>
+</html>
+```
+
+3. Add a **Base64 Encode** action. 
+4. Add the **URL** action with the following text: `data:text/html;base64,{{Base64 Variable From Step 3}}`.
+5. Add a **Get Contents of Web Page** action.
+6. Add a **Get Text From Input** action.
+7. Add a **Replace Text** action to get rid of the occasional trailing space in the output. Search string is `^\s+|\s+$|\s+(?=\s)/g` and the replace string is `$1` with the Regular Expression slider activate.
+8. Insert a **Get Dictionary From Input** action. What is return is the contents of the `document.write( JSON.stringify( dict ) );` command in Step 1.
+
+	>You can change the output format, but your JavaScript should end with a `document.write` command. For instance, if all you want to return is a 0 or 1, just end the script with `document.write(1)` or `document.write(0)`. Make sure that the return string doesn’t have trailing spaces by replacing the text like in Step 7.
+
 ### Restarting Shortcuts
 When your shortcut gets very large, the Shortcuts application can become unstable and more prone to crashing. Before the application crashes, here are symptoms you can look out for:
 
