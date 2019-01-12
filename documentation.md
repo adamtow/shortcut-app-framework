@@ -520,21 +520,25 @@ For instance:
 Change the color of the shortcut icon so you don’t get confused with the current version you’re working on.
 
 ### iCloud Sync and the Corrupt Database Error
-Sometimes Shortcuts crashes and displays a corrupted database error. This is alert looks very scary, and it’s not always obvious what button to press:
+Make sure you have iCloud Sync turned on for your Shortcuts in Settings.
 
->Corrupt database
->
->The shortcuts database cannot be read because it is corrupt.
->
->You can email support with your lunch corrupted data base or reset your custom shortcuts. Your Shortcuts will be lost, but if you use iCloud sync they will be restored.
->
->- Email Support
->
->- Reset Shortcuts
->
->- Exit
+![iCloud Sync Turned on for Shortcuts](https://atow.files.wordpress.com/2019/01/iCloud-Sync-Turned-on-for-Shortcuts.png?w=1280)
 
-Your mileage may vary, but I have found success in tapping Reset Shortcuts. This sometimes makes the Shortcuts app unusable (it launches and immediately crashes). When this happens, I turn the iOS device off and on with these steps:
+#### Corrupt Database Error
+During the course of developing a complicated shortcut, Shortcuts may crash and display the following alert to you. This is alert looks very scary, and it’s not always obvious which button to press:
+
+```
+Corrupt database
+The shortcuts database cannot be read because it is corrupt.
+
+You can email support with your corrupted database or reset your custom shortcuts. Your Shortcuts will be lost, but if you use iCloud Sync they will be restored.
+
+- Email Support
+- Reset Shortcuts
+- Exit
+```
+
+Your mileage may vary, but I have found success in tapping Reset Shortcuts. This sometimes makes the Shortcuts app unusable (it launches and immediately crashes). When this happens, I turn restart the iOS device off and on by following these steps:
 
 1. Press the Volume Up button.
 2. Press the Volume Down button.
@@ -543,24 +547,24 @@ Your mileage may vary, but I have found success in tapping Reset Shortcuts. This
 5. Wait a few moments after the screen goes completely black.
 6. Press and hold the Sleep/Wake button until the Apple logo appears
 
-After iOS has rebooted, I open back up to the Shortcuts app, which may be completely empty.
+After the device has rebooted, I open back up to the Shortcuts app, which may be completely empty.
  
 Do not panic.
 
+![Empty Shortcuts App After Database Corruption Crash](https://atow.files.wordpress.com/2019/01/Empty-Shortcuts-Application-after-database-corruption-crash.png?w=1280)
+
 I repeat. **Do not panic.** 
  
-After a minute, all of my shortcuts return, although the order of the shortcuts is completely hosed (so much for the **Sync Shortcut Order** preference in iOS Settings).
-
-![Empty Shortcuts App After Database Corruption Crash](https://atow.files.wordpress.com/2019/01/Empty-Shortcuts-Application-after-database-corruption-crash.png?w=1280)
+After a minute, all of my shortcuts return from iCloud. The order of the shortcuts, however, may be completely hosed (so much for the **Sync Shortcut Order** preference in iOS Settings).
 
 It may be time to panic if your shortcuts never return (make sure you are first connected to the internet because iCloud sync cannot work while offline). In this event, you will have to restore from a backup that you made earlier to iCloud Drive. 
 
 ### JavaScript
 You can run JavaScript in your shortcuts using the following steps:
 
-1. Add a **Text** action containing your script. Consider using an app like the excellent [Scriptable](https://scriptable.app) to debug your script prior to pasting it into Shortcuts.
+1. Add a **Text** action containing your script. Consider using an app like the [excellent Scriptable iOS application](https://scriptable.app) to debug your script prior to pasting it into Shortcuts.
 ```
-const dict = { “name”: “John Doe”, “address”: “123 Main Street” };
+const dict = { "name": "John Doe", "address": "123 Main Street" };
 document.write( JSON.stringify( dict ) );
 ```
 2. Add a **Text** action that references your script in (1).
@@ -578,36 +582,52 @@ document.write( JSON.stringify( dict ) );
 </html>
 ```
 
-3. Add a **Base64 Encode** action. 
+3. Add a **Base64 Encode** action. Set Line Breaks to None.
 4. Add the **URL** action with the following text: `data:text/html;base64,{{Base64 Variable From Step 3}}`.
 5. Add a **Get Contents of Web Page** action.
 6. Add a **Get Text From Input** action.
 7. Add a **Replace Text** action to get rid of the occasional trailing space in the output. Search string is `^\s+|\s+$|\s+(?=\s)/g` and the replace string is `$1` with the Regular Expression slider activate.
-8. Insert a **Get Dictionary From Input** action. What is return is the contents of the `document.write( JSON.stringify( dict ) );` command in Step 1.
+8. Insert a **Get Dictionary From Input** action. What is returned is the contents of the `document.write( JSON.stringify( dict ) );` command in Step 1.
 
-	>You can change the output format, but your JavaScript should end with a `document.write` command. For instance, if all you want to return is a 0 or 1, just end the script with `document.write(1)` or `document.write(0)`. Make sure that the return string doesn’t have trailing spaces by replacing the text like in Step 7.
+![Running JavaScript](https://atow.files.wordpress.com/2019/01/Running-JavaScript.png?w=900)
+	
+You can change the output format, but your JavaScript should end with a `document.write` command. For instance, if all you want to return is a 0 or 1, just end the script with `document.write(1)` or `document.write(0)`. Make sure that the return string doesn’t have trailing spaces (see Step 7).
 
 ### Restarting Shortcuts
-When your shortcut gets very large, the Shortcuts application can become unstable and more prone to crashing. Before the application crashes, here are symptoms you can look out for:
+When your shortcut gets very large, it’s just a matter of time before the Shortcuts application becomes unstable and crashes. Here are symptoms you can look out for before it crashes:
 
 - Scrolling becomes slow and jittery.
-- Fields that have editable text become white and can’t be tapped on.
+- Fields that have editable text go white and can’t be tapped on.
 - Action blocks are shown visually overlapping each other.
-- Tapping on an action to add it to the bottom of the shortcut takes a long time.
+- Tapping on an action to add it to the shortcut’s bottom takes a long time.
 
-When you see any of the above, consider closing your shortcuts, waiting a minute, and force-quitting the Shortcuts app. That will free up any memory used up during your development period and make it available again for the Shortcuts app. Scrolling will become smoother and the other visual defects will be resolved (until it starts getting slow again).
+When you see any of the above, consider closing your shortcuts, waiting a minute, and force-quitting the Shortcuts app. This will free up any memory used up during your development period and make it available again for the Shortcuts app. Scrolling will become smoother and the other visual defects will be resolved (until it starts getting slow again).
 
 ### Scrolling Through Your Code
-Shortcut applications can get quite long, and it’s a pain to scroll through hundreds or thousands of lines of code at a time. One tip is to put the most important code at the top of bottom of your shortcut. You can jump to the top of the shortcut by tapping on your device’s status bar.
+Shortcut applications can get quite long, and it’s a pain to scroll through hundreds or thousands of lines of code at a time.
 
+#### Jumping to the Top
+One tip is to put the most important code at the top of bottom of your shortcut. You can jump to the top of the shortcut by tapping on your device’s status bar.
+
+>I hope future versions of Shortcuts improves navigation in complicated shortcuts. It would be great to jump more quickly between sections of code through search or via something akin to [Kodex’s minimap](https://kodex.app/#features-href).
+
+#### Actions at the Bottom
 By tapping on an action in the Actions sidebar, the action will be added to the bottom of your shortcut. Remember to delete the action if you aren’t planning to use it. 
 
 >I like to use the **Comment** action since it does nothing when run.
 
-The faster your swipe, the faster Shortcuts will scroll through your code. By separating your classes with comments
+![Jump to the bottom by adding a new action.](https://atow.files.wordpress.com/2019/01/Jump-to-the-bottom-by-adding-a-new-action..png?w=1280)
+
+#### Swiping Speed
+The faster your swipe, the faster Shortcuts will scroll through your code. By separating your classes with [comments](#comments), you can see which section of code you’re in as you pass the columned comments.
+
+#### Scrollbar Position
+You can also take a look at the scrollbar position of the current code block you’re in. If the app crashes, or you have to exit and re-open your shortcut, you can swipe scroll until you reach that remembered position in the scrollbar.
+
+![Remember your scrollbar position](https://atow.files.wordpress.com/2019/01/Remember-your-scrollbar-position.png?w=1280)
 
 ### Save File
-Be sure to activate the **Overwrite If File Exists** slider when saving the `Preferences` global back to disk. If you don’t, Shortcuts will create another preferences file but won’t change the one that your shortcut relies on.
+Be sure to enable **Overwrite If File Exists** when saving the `Preferences` global back to disk. If you don’t, Shortcuts will create another preferences file but won’t change the one that your shortcut relies on.
 
 ![Remember to check Overwrite If File Exists when saving preferences.](https://atow.files.wordpress.com/2019/01/Remember-to-check-Overwrite-If-File-Exists-when-saving-preferences..png?w=1280)
 
@@ -624,22 +644,24 @@ Sign up for a GitHub account. Now that [free accounts can create unlimited priva
 ## Frequently Asked Questions
 
 ### Why put all this code into one shortcut? It’s too complex and takes too long to scroll through all of the code. Why not compartmentalize the functionality into smaller sets of shortcuts? 
-If you plan on distributing your shortcuts to the public, I think it’s better to place all of your code into one shortcut rather than having the user to download (and maintain) dependency shortcuts. 
+If you plan on distributing your shortcuts to the public, I think it’s better to place all of your code into one shortcut rather than having the user to download (and maintain) several dependency shortcuts. 
 
-I feel this is more of a job for Apple to address. Allowing shortcuts to be bundle or container for multiple shortcuts would go a long way towards creating small re-usable shortcuts that can be used across multiple shortcut applications.
+My hope is that the Shortcuts team at Apple addresses this in the future. Allowing shortcuts to be bundle or container for multiple shortcuts would go a long way towards creating small re-usable shortcuts that can be used across multiple shortcut applications.
 
 ### Shortcuts are not as Powerful as what I can Create in Xcode. 
-Of course, and I am not saying shortcut applications are. At the same time, can you program in Xcode while lying prone in bed or strolling in the park? You can’t lug your laptop everywhere you go like you can carry your iPhone. Can you make an app in 30 seconds in Xcode to select a group of photos from the user’s Photos Library and resize them for uploading to a website?
+Of course, and I am not saying shortcut applications are. At the same time, can you efficiently and effectively program in Xcode while laying in bed or strolling in the park? You can’t lug your laptop everywhere you go like you can carry your iPhone. Can you make an app in 30 seconds in Xcode to select a group of photos from the user’s Photos Library and resize them for uploading to a website?
+
+>App Framework provides tools and design methodologies for creating complex applications just in Shortcuts. I wrote upwards of 30% of LaunchCuts, Cronios, and Inspector when away from my desk.
 
 The visual programming style of Shortcuts, coupled with the touch UI of iOS enables on-to-go mobile programming. Rather than trying to shoehorn decades of desktop programming tools into a phone or tablet interface, why not try to create new development tools and interfaces optimized for mobile and touch? And, where appropriate, port the best tools from desktop programming to the mobile environment.
 
-App Framework then let’s you create complex applications just in Shortcuts. I wrote upwards of 30-40% of LaunchCuts, Cronios, and Inspector when away from my desk.
+>I’d rather have a beef-up version of Shortcuts than a port of Xcode to iOS.
 
 ***
 
 <span id="license"></span>
 ## License
-Copyright © 2018 Adam Tow • tow.com • @atow
+Copyright © 2018-2019 Adam Tow • tow.com • @atow
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
