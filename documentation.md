@@ -19,6 +19,7 @@ By Adam Tow • [tow.com](tow.com) • [@atow](https://twitter.com/atow/)
 - [Special Comments](#comments)
 - [Miscellaneous Tips and Tricks](#misc)
 - [Frequently Asked Questions](#faq)
+- [Localization](#localization)
 - [License](#license)
 
 ***
@@ -682,6 +683,17 @@ Of course, and I am not saying shortcut applications are. At the same time, can 
 The visual programming style of Shortcuts, coupled with the touch UI of iOS enables on-the-go mobile programming. Rather than trying to shoehorn decades of desktop programming tools into a phone or tablet interface, why not try to create new development tools and interfaces optimized for mobile and touch? And, where appropriate, port the best tools from desktop programming to the mobile environment.
 
 >I’d rather have a beefed-up version of Shortcuts than a port of Xcode to iOS.
+
+***
+
+<span id="localization"></span>
+## Localization
+App Framework is available in English, but the application is fully ready to be localized. I have developed an application, Localization Helper, that will assist you in localizing App Framework into your language.
+
+> [**Download Localization Helper from RoutineHub &raquo;**](https://routinehub.co/shortcut/1931)
+
+When the localization file is complete, either submit a pull request on [my GitHub page](https://github.com/adamtow/).
+
 
 ***
 
