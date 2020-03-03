@@ -88,44 +88,44 @@ The `App` variable is an example of a [pseudo-global variable](#global-vars) and
 ## Preferences
 Preferences are stored as a JSON file in the Shortcuts directory of iCloud Drive in a folder named `App Framework` (the value of the `App.App Name` variable):
 
-`iCloud Drive/Shortcuts/App Framework/config.json`
+`iCloud Drive/Shortcuts/App Framework 2/config.json`
 
 Default Preferences, found in the `App` global, are loaded the first time the shortcut is launched by the user. In this shortcut, we have six preferences:
 
-1. **Copy Locally**: When copying text, copy to the local clipboard or the user’s global clipboard on iCloud (which is available for devices supporting Handoff).
+1. **Auto Update**: Determines whether the shortcut checks for update automatically via RoutineHub on launch.
 2. **Debug**: Displays alerts when moving through the application. Useful for understanding what [pseudo-function](#functions) is being called at the exact moment.
-3. **Language**: The language that will be used to generate the `Localized Strings` global variable.
-4. **Number**: A number that the user can modify in the `Program.step2` function.
-5. **Text**: A string that the user can modify in the `Program.step2` function.
+3. **Debug Level**: The level of debug. You can choose to display different information depending on the debug level.
+4. **Donated**: If you want to add donation to your app, this flag checks whether or not the user has donated.
+5. **Language**: The language that will be used to generate the `Localized Strings` global variable.
 6. **Version**: This corresponds to the build number of the application. It’s updated whenever a new version of the shortcut is added and run by the user.
 
 Preferences are available throughout your program’s execution via the `Preferences` global variable.
 
-![Preferences in Code and During Program Execution](https://atow.files.wordpress.com/2019/01/Preferences-in-Code-and-While-Running-Application.png?w=1280)
+![Preferences in Code and During Program Execution](http://adamtow.github.io/shortcut-app-framework/images/2_preferences.png)
 
-As you build your own application, you’ll add and remove items to the `Default Preferences` variable in the `App` global. Remember to add them to your preferences menu in the [pseudo-function `Application.settings`](#application-settings).
+As you build your own application, you’ll add and remove items to the `Preferences` variable in the `App` global. Remember to add them to your preferences menu in the [pseudo-function `Application.settings`](#application-settings).
 
->When you make changes to the `Preferences` variable, remember to call **Set Variable** on `Preferences`. Otherwise, your changes will not be saved back to the `Preferences`. Follow this up with the **Save File** action to save your changes back to iCloud Drive.
+>When you make changes to the `Preferences` variable, remember to call **Set Variable** on `Preferences`. Otherwise, your changes will not be saved back to the `Preferences`. Follow this up with either the **Save File** action to save your changes back to iCloud Drive or use the `Preferences.save` pseudo-function to queue your save up during the next iteration of the application loop.
 
-![Calling Set Variable and Save File actions when saving preferences.](https://atow.files.wordpress.com/2019/01/Calling-Set-Variable-and-Save-File-actions-when-saving-preferences..png?w=1280)
+![Calling Set Variable and Preferences.save pseudo-function when saving preferences.](http://adamtow.github.io/shortcut-app-framework/images/2_preferences_save.png)
 
 ### Device-Specific Preferences
 You may want to have separate preferences for your shortcut when it is run on the user’s iPad or iPhone. If desired, set the value of the `App.Device-Specific Preferences` boolean to `true`.
 
 This will use the Device Name of the iOS device as the unique name for the preferences file.
 
-![Device-Specific Preferences](https://atow.files.wordpress.com/2019/01/Device-Specific-Preferences.png?w=1280)
+![Device-Specific Preferences](http://adamtow.github.io/shortcut-app-framework/images/2_device-specific-preferences.png)
 
 >Note: If the user has multiple iOS devices with the same name, those devices will share the same preferences file.
 
 ### Show Debugging Information
 The preference `Debug` turns on additional debugging alerts when running the App Framework shortcut. It will stop execution at key moments during program execution, including the beginning and end of the Application Loop. You’ll be able to view the function that will be called next, the state of the `Current Number` and `Current Text` global variables, and more.
 
-![Debug Preference and Alerts](https://atow.files.wordpress.com/2019/01/Debug-Preference-and-Debug-Alerts.png?w=1280)
+![Debug Preference and Alerts](http://adamtow.github.io/shortcut-app-framework/images/2_debug.png)
 
 Use IF/EQUALS Debug True blocks when developing your application so you can inspect what is happening during complex portions of your code. You can also place a [specialty formatted comment](#comments) immediately below the IF block if you intend to remove this code prior to releasing your shortcut to the public.
 
-![Remove Debug Code Prior to Releasing Your Shortcut](https://atow.files.wordpress.com/2019/01/Remove-Debug-code-prior-to-ship.png?w=1280)
+![Remove Debug Code Prior to Releasing Your Shortcut](http://adamtow.github.io/shortcut-app-framework/images/2_debug_code.png)
 
 Also consider using my shortcut [Inspector](https://tow.com/shortcuts/inspector/), which lets you **view and modify** objects such as Dictionaries, Lists, Text, Numbers, and Booleans at runtime.
 
@@ -155,17 +155,13 @@ App Framework is ready to be translated into your preferred language. It comes w
 }
 ```
 
-![Localized Strings](https://atow.files.wordpress.com/2019/01/Image.png?w=1280)
-
 ***
 
 <span id="assets"></span>
 ## Assets
 Image assets for menus are stored as Base64 strings within the `Assets` global variable. In general, menu icons should be resized to between 82 pixels and 132 pixels wide. Note that when displayed as a vCard menu, your image will be cropped to a circle. Be mindful of image elements that go edge-to-edge, as they may be cropped.
 
-![Assets Dictionary in App Framework](https://atow.files.wordpress.com/2019/01/Assets-Dictionary-in-App-Framework-1.png?w=1280)
-
->I used the [Iconify shortcut](https://routinehub.co/shortcut/1384) from [heyitzspencer](https://routinehub.co/user/heyitzspencer) to create the menu icons for App Framework.
+![Assets Dictionary in App Framework](http://adamtow.github.io/shortcut-app-framework/images/2_assets.png)
 
 ***
 
@@ -201,29 +197,20 @@ Here’s what’s happening during each iteration of the application loop:
 4. Program execution goes to the end of the repeat loop, where the `Return` object is evaluated and global variables are reset.
 5. Program execution returns to the top of the loop, where the process repeats itself.
 
-![Pseudo-Functions in App Framework](https://atow.files.wordpress.com/2019/01/Pseudo-Functions-in-App-Framework.png?w=1280)
+![Pseudo-Functions in App Framework](http://adamtow.github.io/shortcut-app-framework/images/2_pseudo-functions.png)
 
 >Remember, at the end of the function, you must configure the [`Return` object](#return), which will be evaluated at the very end of the repeat loop.
 
 <span id="return"><span>
-### Return Object
-The `Return` object contains information about the next function, global variables to assign, and other things your shortcut needs to operate. It is a dictionary that can hold whatever data you wish.
+### Function.stack Object
+The `Function.stack` object contains information about the next function. It is normally a list that contains a list of functions to call next.
 
-![Return Object in App Framework](https://atow.files.wordpress.com/2019/01/Return-Object.png?w=1280)
+![Function.stack list in App Framework 2](http://adamtow.github.io/shortcut-app-framework/images/2_function-stack.png)
 
->App Framework does not evaluate for errors in the `Return` object. Consider it an exercise to add an `Error Code` and `Error Number` fields to the `Return` dictionary. So, if an error occurred during the shortcut’s execution, you can use this information to raise an alert to the user.
-
-Within this version of App Framework, the primary values that the developer must specify in the `Return` object are:
-
-- **handled**: a boolean value. Set true if the function successfully ran. False otherwise. App Framework returns to the `Program.start` function if an error occurred.
-- **next**: a string that is the next function to call. `Function Name` will be assigned the value of `next` at the end of the repeat loop.
-- **args**: a dictionary or singular element that will be assigned to the `Arguments` global variable. This can then be used by the next function.
-- **selection**: an array of elements. Selection is actually not used by App Framework, but it’s here to show how you can hold a list of items that the next function needs to operate on (i.e. a list of images, numbers, or strings).
-
-![Repeat Loop Beginning and End](https://atow.files.wordpress.com/2019/01/Repeat-Loop-Beginning-and-End.png?w=1280)
+> If you enter a function that doesn't exist in your app, App Framework will skip over it. If there are no more functions in the `Function.stack` list, it will use the value of the `Default Function` in the `App` dictionary object.
 
 ### Shortcut Input
-In App Framework, the shortcut checks the value of the `Shortcut Input` pseudo-global variable. If the shortcut was launched without input, it tells the `Application.menus` function to go to `Application.welcome` via the `Arguments.next` variable. If input was provided to the shortcut, `Application.menus` will go to `Program.start` after setting up the menus.
+In App Framework 2, the shortcut checks the value of the `Input` pseudo-global variable. If the variable contains a dictionary that has a `fn` key, it will jump to the end of the shortcut and run whatever command is specified by the `fn` key. This allows you to use code outside of the application loop, which is useful to simulate using the Run Shortcut action on itself. 
 
 The easiest way to evaluate if input was provided to the app is to coerce the input to a text string, surround it with `#` characters and do a text comparison.
 
@@ -231,14 +218,12 @@ The easiest way to evaluate if input was provided to the app is to coerce the in
 
 If the value is `##`, it means the app was launched without parameters. This could mean the user tapped on it from the Shortcuts home screen, launched it from the Notification Widget screen, or invoked via a Siri voice command.
 
->If you use Cronios, your app can be launched with a Cronios dictionary object that contains a boolean variable named `Cronios` set to true. That way you know that your shortcut is bring run automatically and in the background.
-
 If the text comparison returns false, your shortcut was launched with parameters. You may then choose to run a different function when the Application Loop begins.
 
 ***
 
 <span id="menus"></span>
-## vCard Menus
+## vCard Menus (App Framework 1.0.1 Documentation Version)
 Standard menus generated by the **Choose from List** or **Choose from Menu** actions are limited in what they can display. A trick many developers have been using in their shortcuts is supplying the **Choose from List** action with a list filled with Contact cards, also known as [vCards](https://en.m.wikipedia.org/wiki/VCard).
 
 ![Pretty Menus Using vCards](https://atow.files.wordpress.com/2019/01/Pretty-menus-using-vCards.png?w=1280)
@@ -288,6 +273,9 @@ To create a vCard menu, follow these steps:
 
 ![vCard Menu Creation](https://atow.files.wordpress.com/2019/01/IMG_2109.png?w=1280)
 
+### Toolbox Pro
+You can also use tools such as [Toolbox Pro](https://toolboxpro.app) to create menus in your apps instead of having to do it manually using the techniques described above.
+
 ***
 
 
@@ -307,35 +295,26 @@ Here are some examples of global variables used in App Framework:
 - `App`
 - `All Localizations`
 - `Localized Strings`
-- `Current Number`
-- `Current Text`
-- `Function Name`
-- `Return`
-- `Arguments`
-- `Selection`
-
-![Pseudo-Global Variables](https://atow.files.wordpress.com/2019/01/Pseudo-Global-Variables.png?w=1280)
+- `Debug`
+- `Function.name`
+- `Function.stack`
 
 ***
 
 <span id="local-vars"></span>
 ## Pseudo-Local Variables
-Local variables are variables that are used solely within a specific [pseudo-function](#functions). For instance, in the `Program.step2` function, we create a vCard menu. We don’t use this menu variable anywhere else, so it makes sense to distinguish it from variables in other functions.
-
-![Pseudo-Local Variables in App Framework](https://atow.files.wordpress.com/2019/01/Pseudo-Local-Variables-in-App-Framework.png?w=1280)
+Local variables are variables that are used solely within a specific [pseudo-function](#functions). For instance, in the `Application.main` function, we create a vCard menu. We don’t use this menu variable anywhere else, so it makes sense to distinguish it from variables in other functions.
 
 To accomplish this, we prefix the variable name with the name of the function that it belongs to. The other named components of a local variable are in lowercase or [lower camel case](https://en.m.wikipedia.org/wiki/Camel_case). For example:
 
-- `Program.step2.menu`
-- `Program.step2.menuChoice`
-- `Program.step2.menuType`
-- `Program.step2.newText`
+- `Application.menu.choice`
+- `Application.main.menuItems`
 
-The local variables in the `Application.settings` function are named as follows:
+The local variables in the `Settings.open` function are named as follows:
 
-- `Application.settings.menu`
-- `Application.settings.language`
-- `Application.settings.args`
+- `Settings.open.menuItems`
+- `Settings.open.menu`
+- `Settings.open.choice`
 
 As you can see in the screenshot below, it’s now easy to distinguish which variables belong to which function just by looking at their names.
 
@@ -344,7 +323,7 @@ As you can see in the screenshot below, it’s now easy to distinguish which var
 ***
 
 <span id="classes-vars"></span>
-## Pseudo-Classes
+## Pseudo-Classes (App Framework 1.0.1 Documentation Version)
 Pseudo-classes combine related pseudo-functions under the same prefix. When evaluating the `Function Name` variable, the shortcut can skip unrelated functions belong to other classes.
 
 ![Pseudo-Classes in App Framework](https://atow.files.wordpress.com/2019/01/Pseudo-Classes-in-App-Framework.png?w=1280)
@@ -388,15 +367,12 @@ We also separate pseudo-classes with [columned comments](#comments). Choose an e
 ## Pseudo-Functions
 Pseudo-functions are contained within a pseudo-class. Their names are prefixed by the name of the class:
 
-- `Program.start`
-- `Program.step2`
-- `Program.step3`
-- `Program.step4`
-- `Program.actionMenuHandler`
+- `Application.main`
+- `Application.about`
+- `Application.help`
+- `Application.donate`
 
 You use functions within a class to organize your code in a logical manner. 
-
-![Pseudo-Functions in App Framework](https://atow.files.wordpress.com/2019/01/Pseudo-Functions-in-App-Framework.png?w=1280)
 
 The start of the function is a comment with the text block:
 
@@ -415,14 +391,18 @@ Be sure to add a comment explaining what the function does immediately following
 ### Functions
 App Framework has the following functions defined:
 
-- **Program.start**: This function doesn’t do too much, although you can use it to do some additional initialization. You could, for instance, evaluate the `Original Input` global variable and display something different depending on whether the shortcut was launch with input or not. This function is called when the user taps **Start Program** from `Application.welcome` or when the shortcut is run with input.
-- **Program.step2**: The primary function in App Framework. This displays the menu containing the `Current Number` and `Current Text` preference variables. It also displays the Actions menu, and takes user input.
-- **Program.step3**: This is a stub function. It isn’t called anywhere by the application, but you can add a menu item and update the `Return` object to run it.
-- **Program.step4**: Another stub function. This one calls `Program.step5`, but that function doesn’t exist (so it should raise an error at the end of the Application Loop.
-- **Program.actionMenuHandler**: This function handles choosing an Action menu from `Program.step2`: Copy to Clipboard, View Application Flow, License, Settings, and Exit.
-- **Application.menus**: This function generates the Action menu used in `Program.step2`.
-- **Application.welcome**: This function is called when the App Framework shortcut is run with no input.
-- **Application.settings**: This function is called when the Settings menu item is chosen from `Program.step2` or `Application.welcome`. It handles updating the `Copy Locally`, `Debug`, and `Language` preferences. It also has a stub for checking for updates to the shortcut. Right now, it informs the user of the current version and build and redirects them to the RoutineHub.co page for App Framework. Your shortcut might call UpdateKit or another shortcut updater library.
+- **Application.main**: Displays the main menu for the app.
+- **Application.about**: Displays the about page.
+- **Application.help**: Opens a web view to the documentation.
+- **Application.donate**: Allows the user to donate to the developer.
+- **Primary.run**: The primary function in App Framework. This just displays a notification to the user.
+- **Settings.open**: Displays the settings page.
+- **Settings.language**: Displays a menu allowing the user to change the language of the shortcut.
+- **Settings.update**: Checks for updates to the shortcut on RoutineHub.
+- **Settings.reset**: Resets all settings for the app.
+- **Preferences.get**: Retrieves preferences.
+- **Preferences.save**: Saves the value of the `Preferences` variable to disk.
+- **Welcome.main**: Code that's run when the application is first installed.
 
 ***
 
@@ -439,46 +419,6 @@ This denotes the start of a pseudo-class.
 🔵◻️◻️◻️🔵◻️◻️
 🔵◻️◻️◻️🔵◻️◻️
 ◻️🔵🔵◻️🔵🔵🔵
-```
-
-This framework also separates classes with three sets of columned comments for each class. When scrolling through long sections of actions, this makes finding your code easier. 
-
-```
-🔍🔍🔍	🔍🔍🔍	🔍🔍🔍
-🔍🔍🔍	🔍🔍🔍	🔍🔍🔍
-🔍🔍🔍	🔍🔍🔍	🔍🔍🔍
-🔍🔍🔍	🔍🔍🔍	🔍🔍🔍
-🔍🔍🔍	🔍🔍🔍	🔍🔍🔍
-
-🔍🔍🔍	🔍🔍🔍
-🔍🔍🔍	🔍🔍🔍
-🔍🔍🔍	🔍🔍🔍
-🔍🔍🔍	🔍🔍🔍
-🔍🔍🔍	🔍🔍🔍
-
-🔍🔍🔍
-🔍🔍🔍
-🔍🔍🔍
-🔍🔍🔍
-🔍🔍🔍
-
-⚙️⚙️⚙️
-⚙️⚙️⚙️
-⚙️⚙️⚙️
-⚙️⚙️⚙️
-⚙️⚙️⚙️
-
-⚙️⚙️⚙️	⚙️⚙️⚙️
-⚙️⚙️⚙️	⚙️⚙️⚙️
-⚙️⚙️⚙️	⚙️⚙️⚙️
-⚙️⚙️⚙️	⚙️⚙️⚙️
-⚙️⚙️⚙️	⚙️⚙️⚙️
-
-⚙️⚙️⚙️	⚙️⚙️⚙️	⚙️⚙️⚙️
-⚙️⚙️⚙️	⚙️⚙️⚙️	⚙️⚙️⚙️
-⚙️⚙️⚙️	⚙️⚙️⚙️	⚙️⚙️⚙️
-⚙️⚙️⚙️	⚙️⚙️⚙️	⚙️⚙️⚙️
-⚙️⚙️⚙️	⚙️⚙️⚙️	⚙️⚙️⚙️
 ```
 
 ### Debug
@@ -699,7 +639,7 @@ When the localization file is complete, either submit a pull request on [my GitH
 
 <span id="license"></span>
 ## License
-Copyright © 2018-2019 Adam Tow • tow.com • @atow
+Copyright © 2018-2020 Adam Tow • tow.com • @atow
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
